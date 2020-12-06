@@ -16,6 +16,7 @@ export default function App() {
     const { data } = await axios.get(
       `https://fakestoreapi.com/products/${Math.floor(Math.random() * 20)}`,
     );
+    data.price = Math.ceil(data.price) * 100;
     setProduct(data);
   };
 
@@ -41,7 +42,7 @@ export default function App() {
       <Text style={styles.title}>{product.title}</Text>
       <Text style={styles.description}>{product.description}</Text>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Buy for ₹ {product.price}</Text>
+        <Text style={styles.buttonText}>Buy for ₹ {product.price / 100}</Text>
       </TouchableOpacity>
     </View>
   );
