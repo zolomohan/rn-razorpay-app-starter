@@ -11,6 +11,7 @@ import axios from 'axios';
 
 export default function App() {
   const [product, setProduct] = useState(null);
+  const [paymentProcessing, setPaymentProcessing] = useState(false);
 
   const onComponentMount = async () => {
     const { data } = await axios.get(
@@ -23,6 +24,17 @@ export default function App() {
   useEffect(() => {
     onComponentMount();
   }, []);
+
+  const onPay = async () => {
+    setPaymentProcessing(true);
+    // 1. Create Order
+
+    // 2. Open Checkout Form
+
+    // 3. On Payment Success, Verify Payment
+
+    setPaymentProcessing(false);
+  };
 
   if (!product) {
     return (
@@ -41,8 +53,12 @@ export default function App() {
       <Image source={{ uri: product.image }} style={styles.image} />
       <Text style={styles.title}>{product.title}</Text>
       <Text style={styles.description}>{product.description}</Text>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Buy for ₹ {product.price / 100}</Text>
+      <TouchableOpacity style={styles.button} onPress={onPay}>
+        {paymentProcessing ? (
+          <ActivityIndicator color="white" size={30} />
+        ) : (
+          <Text style={styles.buttonText}>Buy for ₹ {product.price / 100}</Text>
+        )}
       </TouchableOpacity>
     </View>
   );
